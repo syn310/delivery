@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
+- master  # 마스터에 트리거가 걸려있음
 
 resources:
 - repo: self
@@ -27,15 +27,15 @@ variables:
 - name: MAVEN_OPTS
   value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
-stages:
+stages: # 배열, 하위에 '-'가 있으면 배열이라는 뜻. stages라는 배열 안에 stage도 있고 jobs도 있음 ( 교재 166page 참고 )
 - stage: Build
   displayName: Build stage
-  jobs:
+  jobs: # jobs라는 배열 안에 job이 있고 steps도 있음
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-    steps:
+    steps: # steps 안에 task가 있음
     - task: CacheBeta@1
       inputs:
         key: 'maven | "$(Agent.OS)" | **/pom.xml'
